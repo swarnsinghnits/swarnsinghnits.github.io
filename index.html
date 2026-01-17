@@ -524,6 +524,18 @@
             }
         }
 
+        /* Hidden sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Smooth scroll */
         html {
             scroll-behavior: smooth;
@@ -546,13 +558,13 @@
             <p class="subtitle">Embedded Systems & Wireless Networking Specialist | Building connectivity solutions for millions of devices</p>
             <div class="cta-buttons">
                 <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                <a href="#experience" class="btn btn-secondary">View My Work</a>
+                <a href="#about" class="btn btn-secondary">View My Work</a>
             </div>
         </div>
         <div class="scroll-indicator"></div>
     </header>
 
-    <section id="about">
+    <section id="about" class="fade-in-section">
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
@@ -565,19 +577,11 @@
                     <div class="stat-number">8+</div>
                     <div class="stat-label">Years Experience</div>
                 </div>
-                <!--<div class="stat-card">
-                    <div class="stat-number">67%</div>
-                    <div class="stat-label">Connection Time Reduction</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">30%</div>
-                    <div class="stat-label">Interference Reduction</div>
-                </div>-->
             </div>
         </div>
     </section>
 
-    <section id="experience">
+    <section id="experience" class="fade-in-section">
         <div class="container">
             <h2 class="section-title">Professional Experience</h2>
             <div class="experience-grid">
@@ -623,7 +627,7 @@
         </div>
     </section>
 
-    <section id="skills">
+    <section id="skills" class="fade-in-section">
         <div class="container">
             <h2 class="section-title">Technical Skills</h2>
             <div class="skills-container">
@@ -679,7 +683,7 @@
         </div>
     </section>
 
-    <section id="education">
+    <section id="education" class="fade-in-section">
         <div class="container">
             <h2 class="section-title">Education</h2>
             <div class="education-grid">
@@ -687,13 +691,13 @@
                     <h3>B.Tech in Electronics & Communication Engineering</h3>
                     <p class="institution">National Institute of Technology, Silchar</p>
                     <p class="date">August 2013 - May 2017</p>
-                    <p>GPA: 75.2%</p>
+                    <p>GPA: 75.2% | College Topper - Senior Secondary (Science Stream)</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="awards">
+    <section id="awards" class="fade-in-section">
         <div class="container">
             <h2 class="section-title">Awards & Recognition</h2>
             <div class="awards-grid">
@@ -715,7 +719,7 @@
         </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="fade-in-section">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-grid">
@@ -744,7 +748,45 @@
     </section>
 
     <footer>
-        <p>&copy; 2025 Swarn Kumar Singh. Crafted with passion and code.</p>
+        <p>&copy; 2026 Swarn Kumar Singh.</p>
     </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const faders = document.querySelectorAll('.fade-in-section');
+        
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -100px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('is-visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
